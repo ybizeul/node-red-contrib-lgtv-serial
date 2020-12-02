@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    RED.nodes.registerType('lgtv-serial',{
+        category: 'network',
+        color: '#a30736',
+        defaults: {
+            name: {value:""},
+            path: {value:"", type:"lgtv-serial-config"},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "lg.svg",
+        label: function() {
+            return this.name||"lgtv-serial";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="lgtv-serial">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-tag"></i> Serial Port</label>
+        <input type="text" id="node-input-path" placeholder="Serial Port">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="lgtv-serial">
+    <p>Command your LG TV over the serial port</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">string | Object</span>
+        </dt>
+        <dd> The command to get or set on the TV. </dd>
+        <dd> 
+            <ul>
+                <li> If it's a string, the current state will be fetched</li>
+                <li> If it's an object as in <code>{ power: 0 }</code> the command will be sent </li>
+            </ul>
+        </dd>
+    </dl>
+    <h3>Commands list</h3>
+    <dd>
+        <code>power</code>, <code>aspect_ratio</code>, <code>screen_mute</code>,
+        <code>volume_mute</code>, <code>volume_control</code>,
+        <code>contrast</code>, <code>brightness</code>, 
+        <code>colour</code>, <code>tint</code>, <code>sharpness</code>, 
+        <code>osd</code>, <code>remote</code>, <code>treble</code>, 
+        <code>bass</code>, <code>balance</code>, <code>temperature</code>, 
+        <code>energy</code>, <code>auto</code>, <code>tune</code>, 
+        <code>programme</code>, <code>key</code>, <code>backlight</code>, 
+        <code>input</code>
+    </dd>
+</script>

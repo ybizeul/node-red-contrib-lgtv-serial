@@ -1,0 +1,33 @@
+{
+  "name": "node-red-contrib-lgtv-serial",
+  "version": "0.9.0",
+  "description": "Node-RED module to control LG TVs over a serial connection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ybizeul/node-red-contrib-lgtv-serial.git"
+  },
+  "keywords": [
+    "node-red",
+    "lg",
+    "serial"
+  ],
+  "author": "Yann Bizeul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ybizeul/node-red-contrib-lgtv-serial/issues"
+  },
+  "homepage": "https://github.com/ybizeul/node-red-contrib-lgtv-serial#readme",
+  "node-red": {
+    "nodes": {
+      "lgtv-serial": "lgtv-serial.js",
+      "lgtv-serial-config": "lgtv-serial-config.js"
+    }
+  },
+  "dependencies": {
+    "lgtv-serial": "^0.9.0"
+  }
+}
