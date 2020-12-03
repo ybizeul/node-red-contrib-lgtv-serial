@@ -22,7 +22,12 @@ module.exports = function(RED) {
                     .then(r => { 
                         msg.payload = r
                         const date = new Date(Date.now()).toLocaleTimeString("fr-FR")
-			            this.status({fill:"green",shape:"dot",text:`OK ${r} at ${date}`});
+                        if (r.status == "OK") {
+                            this.status({fill:"green",shape:"dot",text:`OK ${r.result} at ${date}`});
+                        }
+                        else {
+                            this.status({fill:"red",shape:"dot",text:`OK ${r.result} at ${date}`});
+                        }
 			            node.send(msg)
                     })
             }
@@ -31,12 +36,17 @@ module.exports = function(RED) {
                     .then(r => {
                         msg.payload = r
                         const date = new Date(Date.now()).toLocaleTimeString("fr-FR")
-			            this.status({fill:"green",shape:"dot",text:`OK ${r} at ${date}`});
+                        if (r.status == "OK") {
+                            this.status({fill:"green",shape:"dot",text:`OK ${r.result} at ${date}`});
+                        }
+                        else {
+                            this.status({fill:"red",shape:"dot",text:`OK ${r.result} at ${date}`});
+                        }
 		                node.send(msg)
 		            })
             }
 	        else {
-		        this.status({fill:"red",shape:"ring",text:"Incorrect payload, nor a string or an object"});
+		        this.status({fill:"red",shape:"dot",text:"Incorrect payload, nor a string or an object"});
 		        msg.payload = undefined
                 node.send(msg)
                 return
