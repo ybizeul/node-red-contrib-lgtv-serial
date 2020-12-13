@@ -15,43 +15,48 @@ module.exports = function(RED) {
         
             var result=null 
 
+            const date = new Date(Date.now()).toLocaleTimeString("fr-FR")
+
             // If payload is an object, we set the value on the TV
 	        if (typeof(msg.payload) == "object") {
 		        command=Object.keys(msg.payload)[0]
                 result = lgtv.set(command,msg.payload[command])
                     .then(r => { 
                         msg.payload = r
-                        const date = new Date(Date.now()).toLocaleTimeString("fr-FR")
                         if (r.status == "OK") {
-                            this.status({fill:"green",shape:"dot",text:`OK ${r.result} at ${date}`});
+                            this.status({fill:"green",shape:"dot",text:`${r.status} ${r.result} at ${date}`});
                         }
                         else {
-                            this.status({fill:"red",shape:"dot",text:`OK ${r.result} at ${date}`});
+                            this.status({fill:"red",shape:"dot",text:`${r.status} ${r.result} at ${date}`});
                         }
 			            node.send(msg)
                     })
+                    .catch(error => {
+                        this.status({fill:"red",shape:"circle",text:`ERR ${error} at ${date}`});
+                        })
             }
 	        else if (typeof(msg.payload == "string")){
                 result = lgtv.get(msg.payload)
                     .then(r => {
                         msg.payload = r
-                        const date = new Date(Date.now()).toLocaleTimeString("fr-FR")
                         if (r.status == "OK") {
-                            this.status({fill:"green",shape:"dot",text:`OK ${r.result} at ${date}`});
+                            this.status({fill:"green",shape:"dot",text:`${r.status} ${r.result} at ${date}`});
                         }
                         else {
-                            this.status({fill:"red",shape:"dot",text:`OK ${r.result} at ${date}`});
+                            this.status({fill:"red",shape:"dot",text:`${r.status} ${r.result} at ${date}`});
                         }
 		                node.send(msg)
-		            })
+		        })
+                    .catch(error => {
+                        this.status({fill:"red",shape:"ring",text:`ERR ${error} at ${date}`});
+                        })
             }
 	        else {
-		        this.status({fill:"red",shape:"dot",text:"Incorrect payload, nor a string or an object"});
+		        this.status({fill:"red",shape:"ring",text:"Incorrect payload, nor a string or an object"});
 		        msg.payload = undefined
                 node.send(msg)
                 return
 	        }
-            const date = new Date(Date.now()).toLocaleTimeString("fr-FR")
 	        this.status({fill:"yellow",shape:"dot",text:`Sending at ${date}`});
         });
     }
